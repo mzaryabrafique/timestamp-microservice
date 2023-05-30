@@ -24,26 +24,28 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:input", function(req, res) {
-  let input = req.params.input;
-  let date;
-  let unixTimestamp;
-  let utcDate;
 
-  if (isNaN(input)) {
-    date = new Date(input);
-    unixTimestamp = Math.floor(date.getTime() / 1000);
-    utcDate = date.toUTCString();
+app.get("/api/:date?", (req, res) => {
+  const givenDate = req.params.date;
+  let date;
+
+  // check if no date provided
+  if (!givenDate) {
+    date = new Date();
   } else {
-    unixTimestamp = parseInt(input);
-    date = new Date(unixTimestamp * 1000);
-    utcDate = date.toUTCString();
+    // check if unix time:
+    //    number string multiplied by 1 gives this number, data string gives NaN
+    const checkUnix = givenDate * 1;
+    date = isNaN(checkUnix) ? new Date(givenDate) : new Date(checkUnix);
   }
 
-  if (isNaN(unixTimestamp) || isNaN(date.getTime())) {
-    res.json({ error: "Invalid date" });
+  //check if valid format
+  if (date == "Invalid Date") {
+    res.json({ error: "Invalid Date" });
   } else {
-    res.json({ unix: unixTimestamp, utc: utcDate });
+    const unix = date.getTime();
+    const utc = date.toUTCString();
+    res.json({ unix, utc });
   }
 });
 
