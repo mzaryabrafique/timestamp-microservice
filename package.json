@@ -1,0 +1,21 @@
+{
+  "name": "timestamp-projects-microservice",
+  "version": "0.0.1",
+  "description": "Timestamp Microservice",
+  "main": "nodemon index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.0",
+    "express": "^4.12.4",
+    "nodemon": "^2.0.22"
+  },
+  "author": "Zaryab",
+  "keywords": [
+    "node",
+    "express",
+    "microservice"
+  ],
+  "license": "MIT"
+}
